@@ -12,9 +12,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95578CE6-56B5-4F00-BDBF-A9A06CDF8F52}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "covid.web", "covid.web\covid.web.csproj", "{A30158CA-A4F0-446D-A8ED-58F31C75E05A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ScreenShots", "ScreenShots", "{6664E56E-37DA-4F80-ACA0-CB76544770F8}"
+	ProjectSection(SolutionItems) = preProject
+		2020_03_20_19_25_30_Corona_Virus_Dashboard.png = 2020_03_20_19_25_30_Corona_Virus_Dashboard.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +47,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6664E56E-37DA-4F80-ACA0-CB76544770F8} = {95578CE6-56B5-4F00-BDBF-A9A06CDF8F52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {799AF1F0-3914-40BB-8115-BD3B4DAB5895}
