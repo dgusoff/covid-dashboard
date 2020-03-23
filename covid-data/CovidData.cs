@@ -113,6 +113,36 @@ namespace covid_data
                     this.AggregateNumRecovered[i] += localDataPoint.NumRecovered[i];
                 }
             }
+            
+            foreach(var countryData in this.CountryData)
+            {
+                countryData.DailyNewCases = new int[this.Dates.Count].ToList();
+                countryData.DailyNewDeaths = new int[this.Dates.Count].ToList();
+
+                for(int i = 0; i < countryData.NumConfirmed.Count; i++)
+                {
+                    if(i == 0)
+                    {
+                        countryData.DailyNewCases[i] = 0;
+                    }
+                    else
+                    {
+                        countryData.DailyNewCases[i] = countryData.NumConfirmed[i] - countryData.NumConfirmed[i - 1] < 0 ? 0 : countryData.NumConfirmed[i] - countryData.NumConfirmed[i - 1];
+                    }
+                }
+                for (int i = 0; i < countryData.NumDeaths.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        countryData.DailyNewDeaths[i] = 0;
+                    }
+                    else
+                    {
+                        countryData.DailyNewDeaths[i] = countryData.NumDeaths[i] - countryData.NumDeaths[i - 1] < 0 ? 0 : countryData.NumDeaths[i] - countryData.NumDeaths[i - 1];
+                    }
+                }
+
+            }
         }
 
         public void Trim()
@@ -127,7 +157,7 @@ namespace covid_data
             }
             foreach (var locale in this.LocaleData)
             {
-                if (locale.NumConfirmed[locale.NumConfirmed.Count - 1] < 100)
+                if (locale.NumConfirmed[locale.NumConfirmed.Count - 1] < 100 || this.Countries.Contains(locale.Locale))
                 {
                     this.Locales.Remove(locale.Locale);
                 }

@@ -25,7 +25,7 @@ export class CovidLineCharts extends React.Component<ICovidDataProps, ICovidData
     }
     async componentDidMount() {
 
-        let data = await fetch("/weatherforecast/");
+        let data = await fetch("/coviddata/");
         let dataJson = await data.json();
         console.log(dataJson);
 
