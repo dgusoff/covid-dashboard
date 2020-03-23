@@ -11,12 +11,12 @@ namespace net_core_ts.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class CovidDataController : ControllerBase
     {      
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<CovidDataController> _logger;
         private readonly ICovidData _dataService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICovidData dataService)
+        public CovidDataController(ILogger<CovidDataController> logger, ICovidData dataService)
         {
             _dataService = dataService;
             _logger = logger;
