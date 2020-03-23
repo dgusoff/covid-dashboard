@@ -95,8 +95,8 @@ namespace covid.services
                                 dailyCounts[i] = 0;
                             }
                             else
-                            {
-                                dailyCounts[i] = counts[i] - counts[i - 1];
+                            {                                
+                                dailyCounts[i] = counts[i] - counts[i - 1] < 0 ? 0 : counts[i] - counts[i - 1];
                             }
                         }
 

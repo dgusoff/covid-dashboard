@@ -127,7 +127,7 @@ namespace covid_data
             }
             foreach (var locale in this.LocaleData)
             {
-                if (locale.NumConfirmed[locale.NumConfirmed.Count - 1] < 100)
+                if (locale.NumConfirmed[locale.NumConfirmed.Count - 1] < 100 || this.Countries.Contains(locale.Locale))
                 {
                     this.Locales.Remove(locale.Locale);
                 }
