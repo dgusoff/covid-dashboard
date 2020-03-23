@@ -18,6 +18,7 @@ require("./header.scss");
 var react_router_dom_1 = require("react-router-dom");
 var About_1 = require("../test-components/About");
 var SimpleLineChart_1 = require("./../test-components/SimpleLineChart");
+var DailyCounts_1 = require("../test-components/DailyCounts");
 var Header = /** @class */ (function (_super) {
     __extends(Header, _super);
     function Header() {
@@ -32,8 +33,11 @@ var Header = /** @class */ (function (_super) {
                         React.createElement("li", { className: "nav-item active" },
                             React.createElement("a", { className: "nav-link", href: "#" }, "Home")),
                         React.createElement("li", { className: "nav-item" },
+                            React.createElement(react_router_dom_1.Link, { className: "nav-link", to: '/Daily' }, "Daily Totals")),
+                        React.createElement("li", { className: "nav-item" },
                             React.createElement(react_router_dom_1.Link, { className: "nav-link", to: '/Charts' }, "About"))))),
             React.createElement(react_router_dom_1.Route, { exact: true, path: '/', render: function (props) { return React.createElement(SimpleLineChart_1.CovidLineCharts, null); } }),
+            React.createElement(react_router_dom_1.Route, { exact: true, path: '/Daily', render: function (props) { return React.createElement(DailyCounts_1.DailyCounts, null); } }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/Charts", render: function (props) { return React.createElement(About_1.About, null); } })));
     };
     return Header;

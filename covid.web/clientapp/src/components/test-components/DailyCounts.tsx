@@ -23,9 +23,11 @@ export class DailyCounts extends React.Component<ICovidDataProps, ICovidDataStat
             chart: {}
         };
     }
+
+
     async componentDidMount() {
 
-        let data = await fetch("/weatherforecast/");
+        let data = await fetch("/coviddata/");
         let dataJson = await data.json();
         console.log(dataJson);
 
@@ -46,9 +48,6 @@ export class DailyCounts extends React.Component<ICovidDataProps, ICovidDataStat
             countryOptions: countryOptions,
             localeOptions: localeOptions
         }));
-
-        this.renderChart(dataJson.aggregateNumConfirmed, dataJson.aggregateNumDeaths, dataJson.numRecovered);
-
     }
 
 
@@ -64,8 +63,13 @@ export class DailyCounts extends React.Component<ICovidDataProps, ICovidDataStat
                 </div>
 
                 <div>
-                    <p>Cumulative Totals</p>
-                    <canvas id="myChart" ref="myCanvas" />
+                    <p>Cases per day</p>
+                    <canvas id="myChart" ref="casesCanvas" />
+                </div>
+
+                <div>
+                    <p>Deaths per day</p>
+                    <canvas id="deathsPerDay" ref="deathsCanvas" />
                 </div>
             </div>
         )
@@ -74,19 +78,19 @@ export class DailyCounts extends React.Component<ICovidDataProps, ICovidDataStat
     countrySelected = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number): void => {
         if (option && option.text) {
             let selectedCountry = this.state.fullData.countryData.filter((c: { country: string; }) => c.country == option.text)[0];
-            this.renderChart(selectedCountry.numConfirmed, selectedCountry.numDeaths, selectedCountry.numRecovered);
+            this.renderChart(selectedCountry.dailyNewCases, selectedCountry.dailyNewDeaths);
         }
     }
 
     localeSelected = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number): void => {
         if (option && option.text) {
             let selectedLocale = this.state.fullData.localeData.filter((c: { locale: string; }) => c.locale == option.text)[0];
-            this.renderChart(selectedLocale.numConfirmed, selectedLocale.numDeaths, selectedLocale.numRecovered);
+            this.renderChart(selectedLocale.dailyNewCases, selectedLocale.dailyNewDeaths);
         }
     }
 
-    renderChart = (confirmData: [], deathData: [], recoveredData: []) => {
-        const canvas = this.refs.myCanvas as HTMLCanvasElement;
+    renderChart = (confirmData: [], deathData: []) => {
+        const canvas = this.refs.casesCanvas as HTMLCanvasElement;
         const ctx = canvas.getContext("2d");
 
         Chart.helpers.each(Chart.instances, function (instance: any) {
@@ -95,7 +99,7 @@ export class DailyCounts extends React.Component<ICovidDataProps, ICovidDataStat
 
         if (ctx != null) {
             let myChart = new Chart(ctx, {
-                type: "line",
+                type: "bar",
                 data: {
                     labels: this.state.fullData.dates,
                     datasets: [
@@ -105,24 +109,33 @@ export class DailyCounts extends React.Component<ICovidDataProps, ICovidDataStat
                             backgroundColor: [
                                 'rgba(155, 99, 232, 0.4)'
                             ]
-                        },
-                        {
-                            label: "Deaths",
-                            data: deathData,
-                            backgroundColor: [
-                                'rgba(255, 99, 32, 0.4)'
-                            ],
-                        },
-                        {
-                            label: "Recovered",
-                            data: recoveredData,
-                            backgroundColor: [
-                                'rgba(95, 255, 32, 0.4)'
-                            ],
                         }
                     ]
                 }
             });
+
+
+
+            const canvas2 = this.refs.deathsCanvas as HTMLCanvasElement;
+            const ctx2 = canvas2.getContext("2d");           
+
+            if (ctx2 != null) {
+                let myChart2 = new Chart(ctx2, {
+                    type: "bar",
+                    data: {
+                        labels: this.state.fullData.dates,
+                        datasets: [
+                            {
+                                label: "Deaths",
+                                data: deathData,
+                                backgroundColor: [
+                                    'rgba(155, 99, 232, 0.4)'
+                                ]
+                            }
+                        ]
+                    }
+                });
+            }
 
             this.setState(prevState => ({
                 ...prevState,
