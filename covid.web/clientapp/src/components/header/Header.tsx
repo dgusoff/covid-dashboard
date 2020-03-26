@@ -33,6 +33,9 @@ export class Header extends React.Component<IHeaderProps, {}> {
                         </ul>
                     </div>
                 </nav>
+
+                <p>Sorry, we're down right now. They've changed the data model on over at their <a href='https://github.com/CSSEGISandData/COVID-19'>repo</a> and I need to update my API to accomodate. Stay tuned!</p>
+
                 <Route exact path={'/'} render={(props) => <CovidLineCharts />} />
                 <Route exact path={'/Daily'} render={(props) => <DailyCounts />} />
                 <Route exact path={`/Charts`} render={(props) => <About />} />

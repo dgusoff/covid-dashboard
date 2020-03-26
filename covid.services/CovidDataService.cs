@@ -34,7 +34,7 @@ namespace covid.services
 
         private async Task<List<string>> GetCsvData(string category)
         {
-            string url = $"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-{category}.csv";
+            string url = $"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-{category}_global.csv";
             var resp = await client.GetAsync(url);
             resp.EnsureSuccessStatusCode();
             string rawCasesData = await resp.Content.ReadAsStringAsync();
@@ -66,7 +66,8 @@ namespace covid.services
             {
                 try
                 {
-                    TextFieldParser parser = new TextFieldParser(new StringReader(line));
+                    string trimmedLine = line.TrimEnd(',');
+                    TextFieldParser parser = new TextFieldParser(new StringReader(trimmedLine));
                     parser.HasFieldsEnclosedInQuotes = true;
                     parser.SetDelimiters(",");
 
@@ -78,7 +79,15 @@ namespace covid.services
 
                         string localeField = fields[0].Replace(",", "").Replace("'", "");
 
-                        List<int> counts = fields.ToList().Skip(4).Select(int.Parse).ToList();
+                        List<int> counts = new List<int>();
+                        try
+                        {
+                           counts = fields.ToList().Skip(4).Select(int.Parse).ToList();
+                        }
+                        catch (Exception ex)
+                        {
+                            
+                        }
                         List<int> dailyCounts = new int[counts.Count].ToList();
 
                         CovidDataPoint point = new CovidDataPoint(localeField.Replace(",", ""), fields[1]);                       
